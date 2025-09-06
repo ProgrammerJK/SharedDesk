@@ -1,54 +1,51 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Star, MapPin, Wifi, Coffee, Monitor } from 'lucide-react'
+import { Star, Heart } from 'lucide-react'
 
 function WorkspaceCard({ workspace }) {
   return (
-    <Link to={`/workspace/${workspace.id}`} className="group">
-      <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-        <div className="relative h-48 bg-gray-200">
-          <img
-            src={workspace.image}
-            alt={workspace.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-          <div className="absolute top-3 right-3 bg-white rounded-full p-1">
-            <div className="flex items-center space-x-1 px-2 py-1">
-              <Star className="h-4 w-4 text-yellow-400 fill-current" />
-              <span className="text-sm font-medium">{workspace.rating}</span>
-            </div>
+    <Link to={`/workspace/${workspace.id}`} className="group cursor-pointer">
+      <div className="relative mb-3">
+        <img
+          src={workspace.image}
+          alt={workspace.title}
+          className="w-full h-64 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+        />
+        
+        {/* Heart Icon - Airbnb Style */}
+        <button className="absolute top-3 right-3 p-2 hover:scale-110 transition-transform">
+          <Heart className="h-5 w-5 text-white hover:text-rose-500 drop-shadow-lg" />
+        </button>
+        
+        {/* Host Badge */}
+        {workspace.host === "Superhost" && (
+          <div className="absolute top-3 left-3 bg-white px-2 py-1 rounded-full text-xs font-medium shadow-sm">
+            Superhost
+          </div>
+        )}
+        {workspace.host === "Neu" && (
+          <div className="absolute top-3 left-3 bg-rose-500 text-white px-2 py-1 rounded-full text-xs font-medium shadow-sm">
+            Neu
+          </div>
+        )}
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-gray-900 group-hover:text-gray-700 truncate">
+            {workspace.location}
+          </h3>
+          <div className="flex items-center space-x-1 flex-shrink-0">
+            <Star className="h-4 w-4 fill-current text-black" />
+            <span className="text-sm font-medium">{workspace.rating}</span>
           </div>
         </div>
         
-        <div className="p-4">
-          <div className="flex items-center text-gray-500 text-sm mb-2">
-            <MapPin className="h-4 w-4 mr-1" />
-            {workspace.location}
-          </div>
-          
-          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
-            {workspace.title}
-          </h3>
-          
-          <div className="flex items-center space-x-2 mb-3">
-            {workspace.amenities.includes('wifi') && (
-              <Wifi className="h-4 w-4 text-gray-400" />
-            )}
-            {workspace.amenities.includes('coffee') && (
-              <Coffee className="h-4 w-4 text-gray-400" />
-            )}
-            {workspace.amenities.includes('monitor') && (
-              <Monitor className="h-4 w-4 text-gray-400" />
-            )}
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="text-lg font-bold text-gray-900">€{workspace.price}</span>
-              <span className="text-gray-500 text-sm"> / Tag</span>
-            </div>
-            <span className="text-sm text-gray-500">{workspace.reviews} Bewertungen</span>
-          </div>
+        <p className="text-gray-600 text-sm truncate">{workspace.title}</p>
+        
+        <div className="pt-1">
+          <span className="font-semibold text-gray-900">€{workspace.price}</span>
+          <span className="text-gray-600"> pro Tag</span>
         </div>
       </div>
     </Link>
